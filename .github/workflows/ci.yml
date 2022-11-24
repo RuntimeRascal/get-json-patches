@@ -47,6 +47,4 @@ jobs:
       
     - name: Push
       run: |
-        git add .
-        git commit -m 'Bump version from Github Actions'
         git push --follow-tags origin main
