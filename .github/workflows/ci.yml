@@ -16,7 +16,9 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [18.x]
+        #node-version: [14.x, 16.x, 18.x]
+
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -40,7 +42,7 @@ jobs:
         git config user.email "<>"
         
     - name: Bump
-      run: npm version minor
+      run: npm version patch
       
     - name: Push
       run: git push --tags
