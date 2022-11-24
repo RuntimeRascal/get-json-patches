@@ -24,7 +24,7 @@
     },
     "scripts": {
         "clean": "rimraf dist",
-        "compile": "tsc",
+        "build": "tsc",
         "test": "jest",
         "test:watch": "jest --watchAll",
         "test:coverage": "jest --coverage"
