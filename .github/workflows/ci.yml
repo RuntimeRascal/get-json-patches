@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: '18.x'
         #node-version: [14.x, 16.x, 18.x]
 
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
@@ -25,6 +25,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
       with:
+        ref: ${{ github.ref }}
         fetch-depth: 0
         
     - name: Use Node.js ${{ matrix.node-version }}
@@ -45,4 +46,7 @@ jobs:
       run: npm version patch
       
     - name: Push
-      run: git push --tags
+      run: |
+        git add .
+        git commit -m 'Bump version from Github Actions'
+        git push --follow-tags origin main
