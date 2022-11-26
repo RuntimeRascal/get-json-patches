@@ -85,7 +85,7 @@ describe('getJsonPatches tests', () => {
         expect(actual).toStrictEqual(expected);
     });
 
-    describe.skip('array comparisons', () => {
+    describe('array comparisons', () => {
         // TODO: should we compare when arrays have different lengths?
         // Should produce "set" patch with "-" to insert items at end of array
         test('should return "b" array at / when a and b are arrays and lengths are different', () => {
@@ -111,7 +111,7 @@ describe('getJsonPatches tests', () => {
             expect(actual).toStrictEqual(expected);
         });
 
-        test.skip('should compare array with object', () => {
+        test('should compare array with object', () => {
             const a = [{ a: 5, b: 6 }];
             const b = [{ a: 5, b: 7 }];
             const expected: JsonPatch[] = [{ op: 'replace', path: '/0/b', value: b[0].b }];
@@ -185,7 +185,7 @@ describe('getJsonPatches tests', () => {
     //TODO: should we support undefined and null?
     // Does cosmos support patching with a undefined or null value?
     // Does RFC spec support patching with a undefined or null value?
-    describe.skip('undefined and null comparisons', () => {
+    describe('undefined and null comparisons', () => {
         test('should ignore undefined values', () => {
             const a = { undefined: undefined };
             const b = {};
