@@ -22,7 +22,7 @@ const readmeChanged = async () => {
 
 Promise.resolve(true)
     .then(() => console.log(chalk.bgCyan('Starting update badges script')))
-    .then(step('generate coverage', () => shell('npm run test:coverage')))
+    .then(step('generate coverage', () => shell('npm run cover')))
     .then(step('update badges', () => shell("istanbul-badges-readme --logo='jest'")))
     .then(step('check if readme updated', readmeChanged))
     .then(async (readmeUpdated) => {
@@ -33,7 +33,6 @@ Promise.resolve(true)
         console.log(chalk.bgRed('Badges are out of date!'));
         await shell('git add README.md');
         await shell('git commit -m "Update badges"');
-        //await shell('git push');
         console.log(chalk.bgRed('Updated and committed readme.md'));
     })
     .then(() => console.log(chalk.bgCyan('Finished build script')))
