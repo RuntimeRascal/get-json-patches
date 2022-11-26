@@ -69,6 +69,14 @@ jobs:
           echo "New NPM version: ${{ env.NEW_NPM_VERSION }}"   
           echo "Latest Tag: ${{ env.LATEST_TAG }}"
 
+      #TODO: Fail if NEW_NPM_VERSION or LATEST_TAG is not same. If npm version fails then it sets
+      #      empty string. If latest tag isnt equiv to npm version then it is not what we want.
+      - name: Check Valid Tags
+        if: ${{ env.LATEST_TAG }} != ${{ env.NEW_NPM_VERSION }}
+        run: |
+          echo "::error file={name},line={line},endLine={endLine},title={title}::{message}"
+          exit 1
+
       - name: Build Dist
         run: npm run build --if-present
 
