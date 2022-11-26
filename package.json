@@ -1,6 +1,6 @@
 {
     "name": "get-json-patches",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "A function to compare two js objects and return a collection of json patches from the differences",
     "keywords": [
         "json",
