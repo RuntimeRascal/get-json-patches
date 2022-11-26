@@ -35,8 +35,9 @@ jobs:
         fetch-depth: 0
         
     - name: Print Test Vars
-      run: echo "targetRef ${{ github.base_ref }}"
-      run: echo "sourceRef ${{ github.head_ref }}"
+      run: |
+        echo "targetRef ${{ github.base_ref }}"
+        echo "sourceRef '${{ github.head_ref }}'"
       # run: echo mergeRef = '${{ github.ref }}'
       # run: echo prIsDraft = '${{ github.event.pull_request.draft }}'
       # run: echo type = '${{ github.event.action }}'
