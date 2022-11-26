@@ -92,14 +92,12 @@ jobs:
         path: ./dist.zip
 
     - name: Set Version Env Var
-      run: LATEST_VERSION=`git describe --tags` >> $GITHUB_ENV
+      run: echo LATEST_VERSION=$(git describe --tags) >> $GITHUB_ENV
 
     - name: "Can use environment variables"
       run: |
-        echo "The latest version env var: $LATEST_VERSION"   
+        echo "The latest version env var: ${{ env.LATEST_VERSION }}"   
 
-    - run: echo "All env vars:"
-    - run: env
 
     # - run: npm publish --tag ${{ env.DIST_TAG }}
     #   working-directory: './dist'
