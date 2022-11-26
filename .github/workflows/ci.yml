@@ -72,8 +72,11 @@ jobs:
       run: npm run badges --if-present
             
     - name: Bump Version
-      run: npm version patch
+      run: echo NPM_VERSION=$(npm version patch) >> $GITHUB_ENV
       
+    - run: |
+        echo "NPM version output: ${{ env.NPM_VERSION }}"   
+
     - name: Build Dist
       run: npm run build --if-present
       
