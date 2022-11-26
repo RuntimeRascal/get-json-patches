@@ -109,7 +109,7 @@ jobs:
             ./dist.zip
 
       - name: Publish To NPM
-        run: npm publish --tag ${{ env.LATEST_TAG }}
+        run: npm publish
         working-directory: "./dist"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
