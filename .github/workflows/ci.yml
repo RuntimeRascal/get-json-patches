@@ -23,11 +23,8 @@ permissions:
   security-events: none
   statuses: write
 
-env:
-  LATEST_VERSION: ''
-
 jobs:
-  ci:
+  CI:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,15 +33,6 @@ jobs:
       with:
         ref: ${{ github.ref }}
         fetch-depth: 0
-        
-    - name: Print Test Vars
-      run: |
-        echo "targetRef ${{ github.base_ref }}"
-        echo "sourceRef '${{ github.head_ref }}'"
-      # run: echo mergeRef = '${{ github.ref }}'
-      # run: echo prIsDraft = '${{ github.event.pull_request.draft }}'
-      # run: echo type = '${{ github.event.action }}'
-      # run: echo merged = '${{ github.event.pull_request.merged }}'
 
     - name: Setup Git
       run: |
@@ -62,20 +50,24 @@ jobs:
     - name: Test and Coverage 
       run: npm run cover --if-present
 
-    - name: Upload Code Coverage
-      uses: actions/upload-artifact@v3
-      with:
-        name: Code Coverage
-        path: coverage
+    # - name: Upload Code Coverage
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: Code Coverage
+    #     path: coverage
 
-    - name: Update Badges
-      run: npm run badges --if-present
+    # - name: Update Badges
+    #   run: npm run badges --if-present
             
     - name: Bump Version
-      run: echo NPM_VERSION=$(npm version patch) >> $GITHUB_ENV
+      run: echo NEW_NPM_VERSION=$(npm version patch) >> $GITHUB_ENV
+
+    - name: Set Latest Tag
+      run: echo LATEST_TAG=$(git describe --tags) >> $GITHUB_ENV
       
     - run: |
-        echo "NPM version output: ${{ env.NPM_VERSION }}"   
+        echo "New NPM version: ${{ env.NEW_NPM_VERSION }}"   
+        echo "Latest Tag: ${{ env.LATEST_TAG }}"   
 
     - name: Build Dist
       run: npm run build --if-present
@@ -84,23 +76,15 @@ jobs:
     #   run: |
     #     git push --follow-tags origin main
 
-    - name: Zip the published app
-      run: |
-        (zip -r ./dist.zip ./dist)
+    # - name: Zip the published app
+    #   run: |
+    #     (zip -r ./dist.zip ./dist)
 
-    - name: Upload Dist
-      uses: actions/upload-artifact@v3
-      with:
-        name: Dist
-        path: ./dist.zip
-
-    - name: Set Version Env Var
-      run: echo LATEST_VERSION=$(git describe --tags) >> $GITHUB_ENV
-
-    - name: "Can use environment variables"
-      run: |
-        echo "The latest version env var: ${{ env.LATEST_VERSION }}"   
-
+    # - name: Upload Dist
+    #   uses: actions/upload-artifact@v3
+    #   with:
+    #     name: Dist
+    #     path: ./dist.zip
 
     # - run: npm publish --tag ${{ env.DIST_TAG }}
     #   working-directory: './dist'
