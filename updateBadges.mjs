@@ -23,7 +23,7 @@ const readmeChanged = async () => {
 Promise.resolve(true)
     .then(() => console.log(chalk.bgCyan('Starting update badges script')))
     .then(step('generate coverage', () => shell('npm run cover')))
-    .then(step('update badges', () => shell("istanbul-badges-readme --logo='jest'")))
+    .then(step('update badges', () => shell("istanbul-badges-readme --logo='jest' --style='for-the-badge'")))
     .then(step('check if readme updated', readmeChanged))
     .then(async (readmeUpdated) => {
         if(!readmeUpdated) {
