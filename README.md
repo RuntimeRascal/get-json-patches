@@ -16,10 +16,12 @@
 
 </div>
 
+> Package ships both CommonJs `.cjs` for use with `require` and EsModule `.mjs` for use with `import`.
+
 ## Install
 
 ```js
-npm intall get-json-patches
+npm install get-json-patches
 ```
 
 ## How To Use
@@ -42,8 +44,10 @@ patches =
 ]
 */
 ```
+> For additional use case scenarios you can look over the [unit tests](https://github.com/RuntimeRascal/get-json-patches/blob/UpdateReadme/src/getJsonPatches.test.ts).  
 
-
+## Motivation
+I needed a simple way to generate a list of patch objects from comparing 2 javascript objects. Preferably to use in the browser on the client machine to prevent having to send a complete json object to a server for comparison and then to a db or api to apply partial updates. There are many javascript libraries that implement json patch, many of which are listed at [jsonpatch.com](https://jsonpatch.com/#javascript). Some existing libraries offer a diff function to construct collection of patch objects but this seams like a additional after thought to many libs and therefore they are large libs that implement all parts of the json patch spec. Many API's including Azure Cosmos Db expect a json patch and can implement partial updates. This lib just does object comparison and patch creation.
 
 ## TODO List
 - [X] Implement replace primitives
@@ -51,7 +55,8 @@ patches =
 - [X] Implement replace arrays
 - [X] Implement add object
 - [X] Implement add arrays
-- [ ] Add RFC spec path substitues
+- [ ] Add RFC spec path substitutes
 - [ ] Implement remove in array
 - [ ] Implement append to array with `-` in path
+- > Currently the array functionality will just replace entire array if array lengths differ and will only iterate array when lengths are the same.
 - [ ] [rfc6901](https://datatracker.ietf.org/doc/html/rfc6901/) pointer should be `''` rather then `'/'` to point at root
