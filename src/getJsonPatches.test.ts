@@ -23,7 +23,7 @@ describe('getJsonPatches tests', () => {
     test('should return "replace" when "b" updates string property', () => {
         const a = { name: 'John', age: 30 };
         const b = { name: 'Smith', age: 30 };
-        const expected: JsonPatch[] = [{ op: 'replace', path: '/name', value: 'Smith' }];
+        const expected: JsonPatch[] = [{ op: 'set', path: '/name', value: 'Smith' }];
 
         const actual = getJsonPatches(a, b);
 
@@ -45,7 +45,7 @@ describe('getJsonPatches tests', () => {
     test('should return 1 "replace" patch when "b" updates number property', () => {
         const a = { name: 'John', age: 30 };
         const b = { name: 'John', age: 32 };
-        const expected: JsonPatch[] = [{ op: 'replace', path: '/age', value: 32 }];
+        const expected: JsonPatch[] = [{ op: 'set', path: '/age', value: 32 }];
 
         const actual = getJsonPatches(a, b);
 
@@ -76,7 +76,7 @@ describe('getJsonPatches tests', () => {
     test('should return 1 "replace" patch with key of object key', () => {
         const a = { name: 'John', age: 30, obj: { name: 'Sam', age: 20 } };
         const b = { name: 'John', age: 30, obj: { name: 'Sammy', age: 20 } };
-        const expected: JsonPatch[] = [{ op: 'replace', path: '/obj/name', value: 'Sammy' }];
+        const expected: JsonPatch[] = [{ op: 'set', path: '/obj/name', value: 'Sammy' }];
 
         //const actual = benchmark(() => objectDifferences(current, newObj));
         const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
@@ -91,7 +91,7 @@ describe('getJsonPatches tests', () => {
         test('should return "b" array at / when a and b are arrays and lengths are different', () => {
             const a = [1, 2, 3, 4, 5];
             const b = [1, 2, 3, 4, 5, 6];
-            const expected: JsonPatch[] = [{ op: 'replace', path: '/', value: b }];
+            const expected: JsonPatch[] = [{ op: 'set', path: '/', value: b }];
 
             //const actual = benchmark(() => objectDifferences(current, newObj));
             const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
@@ -102,7 +102,7 @@ describe('getJsonPatches tests', () => {
         test('should return indexed replace when a and b are arrays, same lengths and have a different item', () => {
             const a = [1, 2, 3, 4, 5];
             const b = [1, 2, 3, 4, 6];
-            const expected: JsonPatch[] = [{ op: 'replace', path: '/4', value: b[4] }];
+            const expected: JsonPatch[] = [{ op: 'set', path: '/4', value: b[4] }];
 
             //const actual = benchmark(() => objectDifferences(current, newObj));
             const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
@@ -114,7 +114,7 @@ describe('getJsonPatches tests', () => {
         test('should compare array with object', () => {
             const a = [{ a: 5, b: 6 }];
             const b = [{ a: 5, b: 7 }];
-            const expected: JsonPatch[] = [{ op: 'replace', path: '/0/b', value: b[0].b }];
+            const expected: JsonPatch[] = [{ op: 'set', path: '/0/b', value: b[0].b }];
 
             const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
 
@@ -136,7 +136,7 @@ describe('getJsonPatches tests', () => {
         test('should compare strings different', () => {
             const a = 'hello';
             const b = 'world';
-            const expected: JsonPatch[] = [{ op: 'replace', path: '/', value: b }];
+            const expected: JsonPatch[] = [{ op: 'set', path: '/', value: b }];
 
             const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
 
@@ -155,7 +155,7 @@ describe('getJsonPatches tests', () => {
         test('should compare boolean different', () => {
             const a = true;
             const b = false;
-            const expected: JsonPatch[] = [{ op: 'replace', path: '/', value: b }];
+            const expected: JsonPatch[] = [{ op: 'set', path: '/', value: b }];
 
             const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
 
@@ -174,7 +174,7 @@ describe('getJsonPatches tests', () => {
         test('should compare number different', () => {
             const a = 123456;
             const b = 1234567;
-            const expected: JsonPatch[] = [{ op: 'replace', path: '/', value: b }];
+            const expected: JsonPatch[] = [{ op: 'set', path: '/', value: b }];
 
             const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
 
@@ -199,7 +199,7 @@ describe('getJsonPatches tests', () => {
             //TODO: this should work
             const a = { undefined: undefined };
             const b = { undefined: 'valid now' };
-            const expected: JsonPatch[] = [{ op: 'replace', path: b.undefined }];
+            const expected: JsonPatch[] = [{ op: 'set', path: b.undefined }];
 
             const actual = getJsonPatches(a, b);
 
