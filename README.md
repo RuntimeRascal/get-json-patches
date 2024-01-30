@@ -10,7 +10,7 @@
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/RuntimeRascal/get-json-patches/Build%20Dist%20&%20Release?label=Build%20Dist%20%26%20Release&logo=github&style=for-the-badge) ![npm](https://img.shields.io/npm/v/get-json-patches?logo=npm&style=for-the-badge)  
 
- ![Statements](https://img.shields.io/badge/statements-94.44%25-brightgreen.svg?style=for-the-badge&logo=jest) ![Branches](https://img.shields.io/badge/branches-89.47%25-yellow.svg?style=for-the-badge&logo=jest) ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=for-the-badge&logo=jest) ![Lines](https://img.shields.io/badge/lines-97.77%25-brightgreen.svg?style=for-the-badge&logo=jest)  
+ ![Statements](https://img.shields.io/badge/statements-92.72%25-brightgreen.svg?style=for-the-badge&logo=jest) ![Branches](https://img.shields.io/badge/branches-89.47%25-yellow.svg?style=for-the-badge&logo=jest) ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=for-the-badge&logo=jest) ![Lines](https://img.shields.io/badge/lines-95.65%25-brightgreen.svg?style=for-the-badge&logo=jest)  
 
  ![npm bundle size](https://img.shields.io/bundlephobia/min/get-json-patches?style=for-the-badge) ![GitHub](https://img.shields.io/github/license/RuntimeRascal/get-json-patches?style=for-the-badge)
 
