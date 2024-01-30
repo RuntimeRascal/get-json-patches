@@ -62,6 +62,7 @@ const _getJsonPatches = (a: Object, b: Object, parentName = ''): JsonPatch[] => 
         // if both are arrays, then compare the arrays
         if (Array.isArray(a) && Array.isArray(b)) {
             result.push(..._getJsonPatches(value, newValue, propName));
+            continue;
         }
 
         if (value !== newValue) {
