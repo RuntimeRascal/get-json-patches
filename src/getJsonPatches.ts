@@ -1,5 +1,5 @@
 export type JsonPatch = {
-    op: 'add' | 'remove' | 'replace';
+    op: 'add' | 'remove' | 'replace' | 'set';
     path: string;
     value?: object | string | number | boolean | null | Array<any>;
 };
@@ -18,14 +18,14 @@ const _getJsonPatches = (a: Object, b: Object, parentName = ''): JsonPatch[] => 
 
     // Case: primitive type comparison
     if (isPrimitiveType(a) && isPrimitiveType(b) && a !== b) {
-        result.push({ op: 'replace', path: getPath(parentName), value: b });
+        result.push({ op: 'set', path: getPath(parentName), value: b });
         return result;
     }
 
     // Case: array type comparison
     if (Array.isArray(a) && Array.isArray(b)) {
         if (a.length !== b.length) {
-            result.push({ op: 'replace', path: getPath(parentName), value: b });
+            result.push({ op: 'set', path: getPath(parentName), value: b });
             return result;
         }
 
@@ -65,7 +65,7 @@ const _getJsonPatches = (a: Object, b: Object, parentName = ''): JsonPatch[] => 
         }
 
         if (value !== newValue) {
-            result.push({ op: 'replace', path: propName, value: newValue });
+            result.push({ op: 'set', path: propName, value: newValue });
             continue;
         }
     }
