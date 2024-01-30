@@ -24,7 +24,6 @@ const _getJsonPatches = (a: Object, b: Object, parentName = ''): JsonPatch[] => 
 
     // Case: array type comparison
     if (Array.isArray(a) && Array.isArray(b)) {
-        debugger;
         if (a.length !== b.length) {
             result.push({ op: 'set', path: getPath(parentName), value: b });
             return result;
