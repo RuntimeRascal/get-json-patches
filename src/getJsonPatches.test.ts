@@ -65,7 +65,7 @@ describe('getJsonPatches tests', () => {
     });
 
     test('should ignore functions and symbols', () => {
-        const a = { func: () => { }, sym: Symbol('test') };
+        const a = { func: () => {}, sym: Symbol('test') };
         const b = {};
 
         const actual = getJsonPatches(a, b);
@@ -86,6 +86,85 @@ describe('getJsonPatches tests', () => {
     });
 
     describe('array comparisons', () => {
+        test('should compare array prop values as no patches when arrays are identical', () => {
+            const a = {
+                prop: 'test',
+                arrayProp: ['4afcdb87-ae28-4117-92af-bc59a6c9ab9d']
+            };
+            const b = {
+                prop: 'test',
+                arrayProp: ['4afcdb87-ae28-4117-92af-bc59a6c9ab9d']
+            };
+
+            const expected: JsonPatch[] = [];
+
+            //const actual = benchmark(() => objectDifferences(current, newObj));
+            const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        test('should compare array prop values as no patches when arrays with multiple values are identical', () => {
+            const a = {
+                prop: 'test',
+                arrayProp: ['4afcdb87-ae28-4117-92af-bc59a6c9ab9d', '7df571c7-95ff-4633-bf9d-f84b125ed871']
+            };
+            const b = {
+                prop: 'test',
+                arrayProp: ['4afcdb87-ae28-4117-92af-bc59a6c9ab9d', '7df571c7-95ff-4633-bf9d-f84b125ed871']
+            };
+
+            const expected: JsonPatch[] = [];
+
+            //const actual = benchmark(() => objectDifferences(current, newObj));
+            const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        test('should compare array prop values as 2 patches when arrays with multiple values are in separate order', () => {
+            const a = {
+                prop: 'test',
+                arrayProp: ['7df571c7-95ff-4633-bf9d-f84b125ed871', '4afcdb87-ae28-4117-92af-bc59a6c9ab9d']
+            };
+            const b = {
+                prop: 'test',
+                arrayProp: ['4afcdb87-ae28-4117-92af-bc59a6c9ab9d', '7df571c7-95ff-4633-bf9d-f84b125ed871']
+            };
+
+            const expected: JsonPatch[] = [
+                { op: 'set', path: '/arrayProp/0', value: b.arrayProp[0] },
+                { op: 'set', path: '/arrayProp/1', value: b.arrayProp[1] }
+            ];
+
+            //const actual = benchmark(() => objectDifferences(current, newObj));
+            const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
+
+            expect(actual).toStrictEqual(expected);
+        });
+
+        test('should return "b" array at /arrayProp when array b has extra value', () => {
+            const a = {
+                prop: 'test',
+                arrayProp: ['7df571c7-95ff-4633-bf9d-f84b125ed871', '4afcdb87-ae28-4117-92af-bc59a6c9ab9d']
+            };
+            const b = {
+                prop: 'test',
+                arrayProp: [
+                    '4afcdb87-ae28-4117-92af-bc59a6c9ab9d',
+                    '7df571c7-95ff-4633-bf9d-f84b125ed871',
+                    'bf06b42f-44e9-4c3b-b8b9-6aa8cf7254f4'
+                ]
+            };
+
+            const expected: JsonPatch[] = [{ op: 'set', path: '/arrayProp', value: b.arrayProp }];
+
+            //const actual = benchmark(() => objectDifferences(current, newObj));
+            const actual = benchmark(getJsonPatches.bind(null, a, b), getJsonPatches.name);
+
+            expect(actual).toStrictEqual(expected);
+        });
+
         // TODO: should we compare when arrays have different lengths?
         // Should produce "set" patch with "-" to insert items at end of array
         test('should return "b" array at / when a and b are arrays and lengths are different', () => {

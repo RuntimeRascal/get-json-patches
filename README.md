@@ -60,3 +60,6 @@ I needed a simple way to generate a list of patch objects from comparing 2 javas
 - [ ] Implement append to array with `-` in path
 - > Currently the array functionality will just replace entire array if array lengths differ and will only iterate array when lengths are the same.
 - [ ] [rfc6901](https://datatracker.ietf.org/doc/html/rfc6901/) pointer should be `''` rather then `'/'` to point at root
+
+## Notes
+For array comparisons the length of the arrays are compared first and if different then the entire array is replaced at the path. If array lengths are the same, we loop over the array comparing the value at same index from first array with second array. If values are different then a set op patch will be returned at `/arrayPath/<index>` path. 
