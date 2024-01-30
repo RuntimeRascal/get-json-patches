@@ -7,13 +7,11 @@ export type JsonPatch = {
 const isPrimitiveType = (value: any) =>
     typeof value === 'string' || typeof value === 'number' || typeof value === 'bigint' || typeof value === 'boolean';
 
-const isValidType = (value: any) =>
-    typeof value !== 'function' && typeof value !== 'symbol' && typeof value !== 'undefined';
+const isValidType = (value: any) => typeof value !== 'function' && typeof value !== 'symbol' && typeof value !== 'undefined';
 
 const isValidObject = (value: any) => typeof value === 'object' && value !== null && !Array.isArray(value);
 
-const getPath = (parent: string, name: string | number = '') =>
-    parent === '' ? `/${name}` : name === '' ? parent : `${parent}/${name}`;
+const getPath = (parent: string, name: string | number = '') => (parent === '' ? `/${name}` : name === '' ? parent : `${parent}/${name}`);
 
 const _getJsonPatches = (a: Object, b: Object, parentName = ''): JsonPatch[] => {
     const result: JsonPatch[] = [];
@@ -59,6 +57,11 @@ const _getJsonPatches = (a: Object, b: Object, parentName = ''): JsonPatch[] => 
         if (isValidObject(value) && isValidObject(newValue)) {
             result.push(..._getJsonPatches(value, newValue, propName));
             continue;
+        }
+
+        // if both are arrays, then compare the arrays
+        if (Array.isArray(a) && Array.isArray(b)) {
+            result.push(..._getJsonPatches(value, newValue, propName));
         }
 
         if (value !== newValue) {
